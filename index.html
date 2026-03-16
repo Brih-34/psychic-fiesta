@@ -1,166 +1,58 @@
-https://gist.github.com/ptrelford/6044934#file-links-csv
 <!DOCTYPE html>
 <html lang="es">
-<head> 
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Psychic Fiesta - Entre Universos</title>
     <style>
-        :root {
-            --rosa-bri: #ff69b4;
-            --rosa-claro: #ffc0cb;
-            --negro-trans: rgba(10, 10, 10, 0.95);
-        }
-
-        body {
-            margin: 0; height: 100vh; display: flex; justify-content: center; align-items: flex-end;
-            background: #111 no-repeat center center/cover;
-            font-family: 'Arial', sans-serif; overflow: hidden;
-            transition: background-image 1.2s ease-in-out;
-        }
-
-        body::before {
-            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-            background: linear-gradient(to bottom, transparent 40%, rgba(0,0,0,0.8) 100%);
-            z-index: 1;
-        }
-
-        /* --- INTERFAZ SUPERIOR --- */
-        #hud {
-            position: fixed; top: 20px; left: 20px; right: 20px;
-            display: flex; justify-content: space-between; z-index: 100;
-        }
-
-        .stat-box {
-            background: var(--negro-trans); padding: 10px 20px;
-            border-radius: 50px; border: 2px solid var(--rosa-bri);
-            color: white; font-weight: bold; display: flex; align-items: center; gap: 10px;
-            backdrop-filter: blur(10px); box-shadow: 0 0 15px var(--rosa-bri);
-        }
-
-        /* --- BRI-BARTOLO ANIMADA --- */
-        #bri-avatar {
-            position: absolute; top: -130px; right: 40px; width: 140px; height: 140px;
-            animation: flotar 3s ease-in-out infinite; z-index: 10;
-        }
-
-        #bri-body {
-            width: 90px; height: 120px; background: var(--rosa-claro);
-            border-radius: 50px 50px 30px 30px; position: relative; margin: 0 auto;
-            border: 4px solid white; box-shadow: 0 5px 20px rgba(255,105,180,0.5);
-        }
-
-        #bri-head {
-            width: 80px; height: 80px; background: white; border-radius: 50%;
-            position: absolute; top: -15px; left: 5px;
-        }
-
-        .ojo { width: 10px; height: 15px; background: #222; border-radius: 50%; position: absolute; top: 30px; animation: parpadeo 4s infinite; }
-        #ojo-izq { left: 20px; } #ojo-der { right: 20px; }
-        @keyframes parpadeo { 0%, 95%, 100% { transform: scaleY(1); } 97% { transform: scaleY(0.1); } }
-
+        :root { --rosa-bri: #ff69b4; --rosa-claro: #ffc0cb; --negro: rgba(10, 10, 10, 0.95); }
+        body { margin: 0; height: 100vh; display: flex; justify-content: center; align-items: flex-end; background: #111 no-repeat center center/cover; font-family: sans-serif; overflow: hidden; transition: 1.2s; }
+        body::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(to bottom, transparent 40%, rgba(0,0,0,0.8) 100%); z-index: 1; }
+        #hud { position: fixed; top: 20px; left: 20px; right: 20px; display: flex; justify-content: space-between; z-index: 100; }
+        .stat { background: var(--negro); padding: 10px 20px; border-radius: 50px; border: 2px solid var(--rosa-bri); color: white; font-weight: bold; box-shadow: 0 0 15px var(--rosa-bri); }
+        #bri-avatar { position: absolute; top: -130px; right: 40px; width: 140px; height: 140px; animation: flotar 3s infinite; z-index: 10; }
+        #bri-body { width: 90px; height: 120px; background: var(--rosa-claro); border-radius: 50px 50px 30px 30px; position: relative; margin: 0 auto; border: 4px solid white; }
+        #bri-head { width: 80px; height: 80px; background: white; border-radius: 50%; position: absolute; top: -15px; left: 5px; }
+        .ojo { width: 10px; height: 15px; background: #222; border-radius: 50%; position: absolute; top: 30px; }
         #bri-beak { width: 15px; height: 20px; background: #ffd700; position: absolute; top: 45px; left: 32px; border-radius: 0 0 10px 10px; }
-
-        @keyframes flotar { 0%, 100% { transform: translateY(0) rotate(-3deg); } 50% { transform: translateY(-20px) rotate(3deg); } }
-
-        /* --- CAJA DE JUEGO --- */
-        #game-ui {
-            position: relative; z-index: 2; width: 90%; max-width: 800px;
-            background: var(--negro-trans); border: 4px solid var(--rosa-bri);
-            border-radius: 25px; padding: 30px; margin-bottom: 30px;
-            box-shadow: 0 0 40px rgba(0,0,0,0.9);
-        }
-
+        @keyframes flotar { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
+        #game-ui { position: relative; z-index: 2; width: 90%; max-width: 800px; background: var(--negro); border: 4px solid var(--rosa-bri); border-radius: 25px; padding: 30px; margin-bottom: 30px; }
         #nombre-box { color: var(--rosa-bri); font-size: 1.5rem; font-weight: bold; margin-bottom: 10px; }
-        #texto-historia { color: white; font-size: 1.2rem; min-height: 80px; line-height: 1.6; }
-
-        .botones-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 25px; }
-        button {
-            background: var(--rosa-bri); color: white; border: none; padding: 15px;
-            border-radius: 15px; cursor: pointer; font-weight: bold; font-size: 1rem;
-            transition: 0.3s;
-        }
-        button:hover { background: white; color: var(--rosa-bri); transform: scale(1.05); }
-
+        #texto-historia { color: white; font-size: 1.2rem; min-height: 80px; }
+        .botones { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 25px; }
+        button { background: var(--rosa-bri); color: white; border: none; padding: 15px; border-radius: 15px; cursor: pointer; font-weight: bold; }
     </style>
 </head>
 <body>
-
     <audio id="bgm" loop src="https://www.chosic.com/wp-content/uploads/2021/07/Rainy-Day-Lofi-Chill-Melody.mp3"></audio>
-
     <div id="hud">
-        <div class="stat-box">❤️ <span id="txt-afinidad">Afinidad: 0</span></div>
-        <div class="stat-box" onclick="toggleMusica()" style="cursor:pointer">🎵 <span id="musica-estado">OFF</span></div>
-        <div class="stat-box">✨ <span id="txt-objeto">Objeto: Ninguno</span></div>
+        <div class="stat">❤️ <span id="afinidad">0</span></div>
+        <div class="stat" onclick="playM()" style="cursor:pointer">🎵 <span id="m-st">OFF</span></div>
     </div>
-
     <div id="game-ui">
-        <div id="bri-avatar">
-            <div id="bri-body"><div id="bri-head"><div class="ojo" id="ojo-izq"></div><div class="ojo" id="ojo-der"></div><div id="bri-beak"></div></div></div>
-        </div>
+        <div id="bri-avatar"><div id="bri-body"><div id="bri-head"><div class="ojo" style="left:20px"></div><div class="ojo" style="right:20px"></div><div id="bri-beak"></div></div></div></div>
         <div id="nombre-box">Bri</div>
-        <div id="texto-historia">Iniciando Shifting...</div>
-        <div id="btn-container" class="botones-grid"></div>
+        <div id="texto-historia">¡Hola! Soy Bri. Borra lo que tenías y pega esto bien para empezar...</div>
+        <div id="btn-container" class="botones"></div>
     </div>
-
     <script>
-        const bgm = document.getElementById('bgm');
-        const textoDiv = document.getElementById('texto-historia');
-        const btnDiv = document.getElementById('btn-container');
-        const nombreDiv = document.getElementById('nombre-box');
-        
-        let stats = { afinidad: 0, objeto: "Ninguno", musica: false };
-
-        function toggleMusica() {
-            stats.musica = !stats.musica;
-            document.getElementById('musica-estado').innerText = stats.musica ? "ON" : "OFF";
-            stats.musica ? bgm.play() : bgm.pause();
-        }
-
+        const t = document.getElementById('texto-historia'), b = document.getElementById('btn-container'), n = document.getElementById('nombre-box');
+        function playM(){ const a=document.getElementById('bgm'); if(a.paused){a.play();document.getElementById('m-st').innerText='ON'}else{a.pause();document.getElementById('m-st').innerText='OFF'} }
         const escenas = {
-            inicio: {
-                nombre: "Bri",
-                texto: "¡Hola! Soy Bri, tu guía (inspirada en Bartolo). Para empezar este viaje coquetón, elige un amuleto:",
-                opciones: [
-                    { texto: "📖 Libro Antiguo", sig: 'universos', obj: 'Libro' },
-                    { texto: "📿 Collar de Plata", sig: 'universos', obj: 'Collar' },
-                    { texto: "💍 Anillo de Hierro", sig: 'universos', obj: 'Anillo' }
-                ]
-            },
-            universos: {
-                nombre: "Bri",
-                texto: "¡Perfecto! Siento la energía del Shifting... ¿A qué universo quieres ir primero?",
-                opciones: [
-                    { texto: "⚔️ Attack on Titan", sig: 'aot', bg: 'https://images.unsplash.com/photo-1580136608079-720212d8001e?q=80&w=1600' },
-                    { texto: "⚡ Harry Potter", sig: 'hp', bg: 'https://images.unsplash.com/photo-1598115629161-5d0705f42654?q=80&w=1600' },
-                    { texto: "🍎 Crepúsculo", sig: 'twilight', bg: 'https://images.unsplash.com/photo-1542281286-9e0a16bb7366?q=80&w=1600' },
-                    { texto: "🌊 Percy Jackson", sig: 'percy', bg: 'https://images.unsplash.com/photo-1563297017-7a54316a76b7?q=80&w=1600' }
-                ]
-            },
-            aot: { nombre: "Levi Ackerman", texto: "Llegas a los cuarteles. Levi te mira fijamente: '¿Vas a quedarte ahí parada o vas a limpiar este desastre?'", opciones: [{ texto: "Limpiar (Afinidad +10)", sig: 'f_bueno', pts: 10 }, { texto: "Responderle", sig: 'f_malo', pts: -5 }] },
-            hp: { nombre: "Draco Malfoy", texto: "En el pasillo de Slytherin, Draco sonríe burlón: 'Vaya, alguien nuevo... ¿Te quedarás conmigo o irás con los perdedores?'", opciones: [{ texto: "Quedarte con él", sig: 'f_bueno', pts: 15 }, { texto: "Irte", sig: 'f_malo' }] },
-            twilight: { nombre: "Edward Cullen", texto: "Bajo la lluvia de Forks, Edward te susurra: 'No puedo leer tu mente... eres especial.'", opciones: [{ texto: "Sonreír", sig: 'f_bueno', pts: 20 }, { texto: "Huir", sig: 'f_malo' }] },
-            percy: { nombre: "Percy Jackson", texto: "En el lago, Percy te saluda: '¡Hey! Annabeth dice que tienes potencial. ¿Vamos a entrenar?'", opciones: [{ texto: "Aceptar", sig: 'f_bueno', pts: 10 }, { texto: "No sé...", sig: 'f_malo' }] },
-            f_bueno: { nombre: "FIN", texto: "¡Has logrado un gran vínculo! Este universo ahora es tu hogar. Bri está orgullosa.", opciones: [{ texto: "Reiniciar", sig: 'inicio' }] },
-            f_malo: { nombre: "GAME OVER", texto: "El Shifting falló... Pero Bri te trajo de vuelta sana y salva.", opciones: [{ texto: "Intentar de nuevo", sig: 'inicio' }] }
+            inicio: { nombre: "Bri", texto: "¡Ahora sí! Soy Bri (inspirada en Bartolo). ¿Lista para el Shifting? Elige un amuleto:", opciones: [
+                { texto: "📖 Libro", sig: 'mundos' }, { texto: "📿 Collar", sig: 'mundos' }
+            ]},
+            mundos: { nombre: "Bri", texto: "¿A qué universo vamos?", opciones: [
+                { texto: "⚔️ Titan", sig: 'aot', bg: 'https://images.unsplash.com/photo-1580136608079-720212d8001e?q=80&w=1600' },
+                { texto: "⚡ Potter", sig: 'hp', bg: 'https://images.unsplash.com/photo-1598115629161-5d0705f42654?q=80&w=1600' }
+            ]},
+            aot: { nombre: "Levi", texto: "Levi te mira: 'Limpia eso.'", opciones: [{ texto: "Sí, señor", sig: 'inicio' }] },
+            hp: { nombre: "Draco", texto: "Draco sonríe: '¿Vienes conmigo?'", opciones: [{ texto: "Claro", sig: 'inicio' }] }
         };
-
         function render(id) {
-            const e = escenas[id];
-            if (e.bg) document.body.style.backgroundImage = `url(${e.bg})`;
-            nombreDiv.innerText = e.nombre;
-            textoDiv.innerHTML = e.texto;
-            btnDiv.innerHTML = '';
-            e.opciones.forEach(o => {
-                const b = document.createElement('button');
-                b.innerText = o.texto;
-                b.onclick = () => {
-                    if (o.pts) { stats.afinidad += o.pts; document.getElementById('txt-afinidad').innerText = `Afinidad: ${stats.afinidad}`; }
-                    if (o.obj) { stats.objeto = o.obj; document.getElementById('txt-objeto').innerText = `Objeto: ${o.obj}`; }
-                    render(o.sig);
-                };
-                btnDiv.appendChild(b);
-            });
+            const e = escenas[id]; if(e.bg) document.body.style.backgroundImage = `url(${e.bg})`;
+            n.innerText = e.nombre; t.innerText = e.texto; b.innerHTML = '';
+            e.opciones.forEach(o => { const btn = document.createElement('button'); btn.innerText = o.texto; btn.onclick = () => render(o.sig); b.appendChild(btn); });
         }
         render('inicio');
     </script>
