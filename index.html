@@ -3,7 +3,7 @@
 <head>
 <title>Entre Universos</title>
 
-<style>
+<style
 body{
 background:black;
 color:white;
@@ -37,13 +37,15 @@ background:#ff3fa1;
 
 <h2>Elige un universo</h2>
 
-<button onclick="alert('Entrando al mundo de magia')">Harry Potter</button>
+<button onclick="document.getElementById('historia').innerText='Llegas a un castillo lleno de magia. Bri te susurra que tengas cuidado...'">Harry Potter</button>
 
-<button onclick="alert('Entrando al campamento mestizo')">Percy Jackson</button>
+<button onclick="document.getElementById('historia').innerText='Estás en el Campamento Mestizo. Percy te saluda con curiosidad.'">Percy Jackson</button>
 
-<button onclick="alert('Entrando al mundo de los titanes')">Attack on Titan</button>
+<button onclick="document.getElementById('historia').innerText='Las murallas se alzan a tu alrededor. Un soldado te pregunta si estás lista para luchar.'">Attack on Titan</button>
 
-<button onclick="alert('Entrando al mundo de vampiros')">Twilight</button>
+<button onclick="document.getElementById('historia').innerText='La lluvia cae en Forks. Alguien misterioso te observa desde el bosque.'">Twilight</button>
+
+<p id="historia"></p>
 
 </body>
 </html>
